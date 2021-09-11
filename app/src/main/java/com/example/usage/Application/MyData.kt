@@ -1,4 +1,4 @@
-package com.example.usage
+package com.example.usage.Application
 
 import android.graphics.drawable.Drawable
 import java.io.Serializable

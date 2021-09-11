@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Application.MainActivity">
 
     <Button
         android:id="@+id/buttonPermission"
@@ -13,7 +13,7 @@
         android:layout_marginTop="37dp"
         android:layout_marginBottom="9dp"
         android:background="@drawable/custom_button"
-        android:text="Permission"
+        android:text="Permission Check"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/buttonRun"
         app:layout_constraintEnd_toEndOf="parent"
