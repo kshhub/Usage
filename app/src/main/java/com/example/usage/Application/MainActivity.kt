@@ -1,5 +1,6 @@
-package com.example.usage
+package com.example.usage.Application
 
+import android.R
 import android.app.AppOpsManager
 import android.app.AppOpsManager.MODE_ALLOWED
 import android.app.AppOpsManager.OPSTR_GET_USAGE_STATS
@@ -12,7 +13,10 @@ import android.os.Bundle
 import android.os.Process.myUid
 import android.provider.Settings
 import android.util.Log
-import android.widget.Button
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +29,10 @@ import kotlin.Comparator
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding:ActivityMainBinding
-    lateinit var adapter:MyAdapter
+    lateinit var adapter: MyAdapter
+
+    private val selectItems = arrayOf("Day", "Week", "Month", "Year")
+    var period:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +43,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun init(){
 
-        val btnP = findViewById<Button>(R.id.buttonPermission)
-        val btnR = findViewById<Button>(R.id.buttonRun)
+        initSpinner(binding.spinnerPeriod)
 
-        btnP.setOnClickListener {
+        binding.buttonPermission.setOnClickListener {
             if (!checkForPermission()) {
                 Log.i(TAG, "The user may not allow the access to apps usage. ")
                 Toast.makeText(
@@ -54,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        btnR.setOnClickListener {
+        binding.buttonRun.setOnClickListener {
             if (!checkForPermission()) {
                 Toast.makeText(
                     this,
@@ -66,6 +72,12 @@ class MainActivity : AppCompatActivity() {
                 initRecyclerView()
             }
         }
+    }
+
+    private fun checkForPermission(): Boolean {
+        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val mode = appOps.checkOpNoThrow(OPSTR_GET_USAGE_STATS, myUid(), packageName)
+        return mode == MODE_ALLOWED
     }
 
     private fun initRecyclerView() {
@@ -86,10 +98,39 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun checkForPermission(): Boolean {
-        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(OPSTR_GET_USAGE_STATS, myUid(), packageName)
-        return mode == MODE_ALLOWED
+    private fun initSpinner(spinner: Spinner) {
+        val spinnerAdapter = this?.let {
+            ArrayAdapter(
+                it.applicationContext, R.layout.simple_spinner_item, selectItems
+            )
+        }
+        spinnerAdapter?.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+        spinner.adapter = spinnerAdapter
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                when (position) {
+                    0 -> {
+                        period = "Day"
+                    }
+                    1 -> {
+                        period = "Week"
+                    }
+                    2 -> {
+                        period = "Month"
+                    }
+                    3 -> {
+                        period = "Year"
+                    }
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
     }
 
     // public List<UsageStats> queryUsageStats(int intervalType, long beginTime, long endTime)
@@ -99,7 +140,15 @@ class MainActivity : AppCompatActivity() {
         val cal = Calendar.getInstance()
         val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         Log.d(TAG, "current: ${df.format(cal.time)}")
-        cal.add(Calendar.MONTH, -2) //시작 시간
+        if(period=="Day"){
+            cal.add(Calendar.DATE, -1)
+        }else if(period=="Week"){
+            cal.add(Calendar.DATE, -7)
+        }else if(period=="Month"){
+            cal.add(Calendar.MONTH, -1)
+        }else{
+            cal.add(Calendar.YEAR, -1)
+        }
         Log.d(TAG, "after: ${df.format(cal.time)}")
 
         val usageStatsManager =
@@ -120,7 +169,6 @@ class MainActivity : AppCompatActivity() {
                     "totalTimeInForeground: ${it.totalTimeInForeground}")
         }
     }
-
     // getPackageName : 앱 이름, getLastTimeUsed : 마지막으로 사용된 시간, getTotalInForeground : Foreground에서 실행된 전체 시간, getAppLaunchCount : 실행된 횟수
 
 }
