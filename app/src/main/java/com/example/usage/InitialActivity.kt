@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.usage.Application.MainActivity
+import com.example.usage.Smartphone.PhoneActivity
 import com.example.usage.databinding.ActivityInitialBinding
 
 class InitialActivity : AppCompatActivity() {
@@ -21,6 +22,13 @@ class InitialActivity : AppCompatActivity() {
         binding.buttonApp.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }
+        binding.buttonPhone.setOnClickListener {
+            intent = Intent(this, PhoneActivity::class.java)
+            startActivity(intent)
+        }
+        binding.buttonIO.setOnClickListener {
+
         }
     }
 }
