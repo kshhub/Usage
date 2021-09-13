@@ -7,20 +7,6 @@
     android:orientation="vertical"
     tools:context=".Smartphone.PhoneActivity">
 
-    <Button
-        android:id="@+id/buttonPermission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/custom_button"
-        android:text="Permission Check"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="@+id/spinnerPeriod"
-        app:layout_constraintStart_toEndOf="@+id/spinnerPeriod"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,8 +20,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             app:layout_constraintEnd_toStartOf="@+id/buttonRun"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonPermission" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/buttonRun"
@@ -47,13 +32,14 @@
             android:text="Run"
             app:backgroundTint="@null"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/spinnerPeriod"
-            app:layout_constraintTop_toBottomOf="@+id/buttonPermission" />
+            app:layout_constraintStart_toEndOf="@+id/spinnerPeriod" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/edge"
         android:orientation="vertical">
 
         <LinearLayout
@@ -64,8 +50,10 @@
 
             <TextView
                 android:id="@+id/textView1"
-                android:layout_width="205dp"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
                 android:shadowColor="#DDC2C2"
@@ -78,7 +66,7 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="205dp"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edge"
                 android:gravity="center"
@@ -98,15 +86,17 @@
 
             <TextView
                 android:id="@+id/textViewBegin"
-                android:layout_width="205dp"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="8dp"
                 android:gravity="center"
                 android:text="yy-mm-dd"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textViewEnd"
-                android:layout_width="205dp"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="yy-mm-dd"
@@ -115,8 +105,9 @@
 
         <TextView
             android:id="@+id/textViewInfo"
-            android:layout_width="match_parent"
+            android:layout_width="380dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="@drawable/edge"
@@ -131,8 +122,10 @@
 
         <TextView
             android:id="@+id/textViewTime"
-            android:layout_width="match_parent"
+            android:layout_width="380dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="h  m"

@@ -1,18 +1,17 @@
 package com.example.usage.Smartphone
 
 import android.R
-import android.app.AppOpsManager
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.Process
-import android.provider.Settings
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.usage.databinding.ActivityPhoneBinding
 import java.text.DateFormat
@@ -41,44 +40,13 @@ class PhoneActivity : AppCompatActivity() {
 
         initSpinner(binding.spinnerPeriod)
 
-        binding.buttonPermission.setOnClickListener {
-            if (!checkForPermission()) {
-                Log.i(ContentValues.TAG, "The user may not allow the access to apps usage. ")
-                Toast.makeText(
-                    this,
-                    "Failed to retrieve app usage statistics. " +
-                            "You may need to enable access for this app through " +
-                            "Settings > Security > Apps with usage access",
-                    Toast.LENGTH_LONG
-                ).show()
-                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-            } else {
-            }
-        }
-
         binding.buttonRun.setOnClickListener {
             totalTime = 0
             begin = ""
             end = ""
-            if (!checkForPermission()) {
-                Toast.makeText(
-                    this,
-                    "You need to check the permission",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                calculateTotalTime()
-                setTime(binding.textViewBegin, binding.textViewEnd, binding.textViewTime)
-            }
+            calculateTotalTime()
+            setTime(binding.textViewBegin, binding.textViewEnd, binding.textViewTime)
         }
-    }
-
-    private fun checkForPermission(): Boolean {
-        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(), packageName)
-        return mode == AppOpsManager.MODE_ALLOWED
     }
 
     private fun initSpinner(spinner: Spinner) {
@@ -164,7 +132,7 @@ class PhoneActivity : AppCompatActivity() {
         endT.text = end
         val h:Int = ((totalTime/1000)/60)/60
         val m:Int = ((totalTime/1000)/60)%60
-        timeT.text = h.toString() + " h" + m.toString() + " m"
+        timeT.text = h.toString() + "  h  " + m.toString() + "  m"
     }
 
 }

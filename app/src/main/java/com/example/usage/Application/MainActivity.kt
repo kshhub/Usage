@@ -1,23 +1,16 @@
 package com.example.usage.Application
 
 import android.R
-import android.app.AppOpsManager
-import android.app.AppOpsManager.MODE_ALLOWED
-import android.app.AppOpsManager.OPSTR_GET_USAGE_STATS
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.Process.myUid
-import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.usage.databinding.ActivityMainBinding
@@ -45,39 +38,10 @@ class MainActivity : AppCompatActivity() {
 
         initSpinner(binding.spinnerPeriod)
 
-        binding.buttonPermission.setOnClickListener {
-            if (!checkForPermission()) {
-                Log.i(TAG, "The user may not allow the access to apps usage. ")
-                Toast.makeText(
-                    this,
-                    "Failed to retrieve app usage statistics. " +
-                            "You may need to enable access for this app through " +
-                            "Settings > Security > Apps with usage access",
-                    Toast.LENGTH_LONG
-                ).show()
-                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-            } else {
-            }
-        }
-
         binding.buttonRun.setOnClickListener {
-            if (!checkForPermission()) {
-                Toast.makeText(
-                    this,
-                    "You need to check the permission",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                showAppUsageStats(getAppUsageStats())
-                initRecyclerView()
-            }
+            showAppUsageStats(getAppUsageStats())
+            initRecyclerView()
         }
-    }
-
-    private fun checkForPermission(): Boolean {
-        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(OPSTR_GET_USAGE_STATS, myUid(), packageName)
-        return mode == MODE_ALLOWED
     }
 
     private fun initRecyclerView() {
