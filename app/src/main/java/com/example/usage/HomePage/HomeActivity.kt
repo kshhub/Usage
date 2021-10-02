@@ -1,4 +1,4 @@
-package com.example.usage
+package com.example.usage.HomePage
 
 import android.app.AppOpsManager
 import android.content.ContentValues
@@ -10,50 +10,23 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.usage.Application.MainActivity
-import com.example.usage.Smartphone.PhoneActivity
-import com.example.usage.databinding.ActivityInitialBinding
+import com.example.usage.BenchMark.BenchActivity
+import com.example.usage.UserPatternAnalysis.UserActivity
+import com.example.usage.databinding.ActivityHomeBinding
 
-class InitialActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
-    lateinit var binding:ActivityInitialBinding
+    lateinit var binding:ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityInitialBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
     }
 
     private fun init(){
-        binding.buttonApp.setOnClickListener {
-            if (!checkForPermission()) {
-                Toast.makeText(
-                    this,
-                    "You need to check the permission",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        binding.buttonPhone.setOnClickListener {
-            if (!checkForPermission()) {
-                Toast.makeText(
-                    this,
-                    "You need to check the permission",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                intent = Intent(this, PhoneActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        binding.buttonIO.setOnClickListener {
-
-        }
-        binding.buttonPermission.setOnClickListener {
+        binding.buttonUser.setOnClickListener {
             if (!checkForPermission()) {
                 Log.i(ContentValues.TAG, "The user may not allow the access to apps usage. ")
                 Toast.makeText(
@@ -65,7 +38,13 @@ class InitialActivity : AppCompatActivity() {
                 ).show()
                 startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
             } else {
+                intent = Intent(this, UserActivity::class.java)
+                startActivity(intent)
             }
+        }
+        binding.buttonBench.setOnClickListener {
+            intent = Intent(this, BenchActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -2,12 +2,10 @@
 
 User Pattern Analysis
 
-# Application Analysis
+# User Pattern Analysis
 
-Analyze the amount of time spent on smartphones
+Analyze the amount of time spent on smartphones and spent on each application
 
-# SmartPhone Analysis
+# BenchMark
 
-Analyze the amount of time spent on each application
-
-# I/O Analysis
+Benchmark
