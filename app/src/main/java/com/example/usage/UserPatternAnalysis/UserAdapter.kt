@@ -1,11 +1,11 @@
-package com.example.usage.Application
+package com.example.usage.UserPatternAnalysis
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usage.databinding.RowBinding
 
-class MyAdapter(val items:ArrayList<MyData>) : RecyclerView.Adapter<MyAdapter.ViewHolder>(){
+class UserAdapter(val items:ArrayList<UserData>) : RecyclerView.Adapter<UserAdapter.ViewHolder>(){
 
     inner class ViewHolder(val binding: RowBinding) : RecyclerView.ViewHolder(binding.root){
     }
